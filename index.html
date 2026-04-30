@@ -3,720 +3,409 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Sidecar | Your AI Learning Journey Starts Here</title>
+<title>AI Interview · Blue Cypress</title>
+
+<!-- Fonts for the page -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..600;1,9..144,300..600&family=Manrope:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+  /* =========================================================
+     PAGE STYLES
+     These style the candidate-facing page only. The overlay
+     has its own scoped styles inside the HubSpot block below.
+     ========================================================= */
 
-  * { margin:0; padding:0; box-sizing:border-box; }
   :root {
-    --primary: #6C3CE1;
-    --primary-dark: #5228B5;
-    --accent: #FF6B35;
-    --dark: #0F0A1E;
-    --light: #F8F6FF;
-    --glass: rgba(255,255,255,0.06);
-    --glass-border: rgba(255,255,255,0.1);
+    --bg: #f4f3ee;
+    --paper: #ffffff;
+    --ink: #0a0a0a;
+    --ink-soft: #5e5e58;
+    --ink-faded: #95938b;
+    --rule: #d8d5cc;
+    --accent: #2d3559;     /* deep indigo */
+    --highlight: #c14d2e;  /* terracotta */
+    --serif: 'Fraunces', Georgia, serif;
+    --sans: 'Manrope', system-ui, sans-serif;
+    --mono: 'IBM Plex Mono', monospace;
   }
-  body { font-family:'Inter',sans-serif; background:var(--dark); color:#fff; overflow-x:hidden; }
-  a { text-decoration:none; color:inherit; }
 
-  /* NAV */
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: var(--sans);
+    background: var(--bg);
+    color: var(--ink);
+    line-height: 1.5;
+    min-height: 100vh;
+    -webkit-font-smoothing: antialiased;
+    background-image:
+      radial-gradient(circle at 15% 0%, rgba(45,53,89,0.04), transparent 45%),
+      radial-gradient(circle at 90% 100%, rgba(193,77,46,0.04), transparent 45%);
+  }
+
+  .shell {
+    max-width: 1080px; margin: 0 auto;
+    padding: 36px 48px; min-height: 100vh;
+    display: flex; flex-direction: column;
+  }
+
+  /* nav */
   nav {
-    position:fixed; top:0; left:0; right:0; z-index:100;
-    padding:1rem 2rem;
-    backdrop-filter:blur(20px);
-    background:rgba(15,10,30,0.7);
-    border-bottom:1px solid var(--glass-border);
-    display:flex; justify-content:space-between; align-items:center;
-    transition: all 0.3s ease;
+    display: flex; justify-content: space-between; align-items: center;
+    padding-bottom: 24px; border-bottom: 1px solid var(--rule);
   }
-  .logo {
-    font-size:1.6rem; font-weight:800;
-    background:linear-gradient(135deg,#fff,var(--accent));
-    -webkit-background-clip:text; -webkit-text-fill-color:transparent;
-    letter-spacing:-0.5px;
-  }
-  .logo span { font-weight:400; opacity:0.7; }
-  .nav-links { display:flex; gap:2rem; align-items:center; }
-  .nav-links a {
-    font-size:0.9rem; font-weight:500; opacity:0.8;
-    transition:all 0.3s; position:relative; cursor:pointer;
-  }
-  .nav-links a:hover, .nav-links a.active { opacity:1; color:var(--accent); }
-  .nav-links a.active::after {
-    content:''; position:absolute; bottom:-6px; left:0; right:0;
-    height:2px; background:var(--accent); border-radius:2px;
-  }
-  .nav-cta {
-    background:linear-gradient(135deg,var(--primary),var(--accent));
-    padding:0.6rem 1.4rem; border-radius:50px; font-weight:600;
-    font-size:0.85rem; opacity:1!important; transition:transform 0.3s, box-shadow 0.3s!important;
-  }
-  .nav-cta:hover { transform:scale(1.05); box-shadow:0 4px 25px rgba(108,60,225,0.4); }
-
-  /* PAGE CONTAINER */
-  .page { display:none; animation:fadeIn 0.5s ease; }
-  .page.active { display:block; }
-  @keyframes fadeIn { from{opacity:0;transform:translateY(20px)} to{opacity:1;transform:translateY(0)} }
-
-  /* HERO */
-  .hero {
-    min-height:100vh; display:flex; flex-direction:column; justify-content:center; align-items:center;
-    text-align:center; padding:8rem 2rem 4rem; position:relative; overflow:hidden;
-  }
-  .hero::before {
-    content:''; position:absolute; top:-30%; left:50%; transform:translateX(-50%);
-    width:800px; height:800px; border-radius:50%;
-    background:radial-gradient(circle, rgba(108,60,225,0.3) 0%, transparent 70%);
-    filter:blur(80px); pointer-events:none;
-  }
-  .hero::after {
-    content:''; position:absolute; bottom:-10%; right:-10%;
-    width:500px; height:500px; border-radius:50%;
-    background:radial-gradient(circle, rgba(255,107,53,0.15) 0%, transparent 70%);
-    filter:blur(60px); pointer-events:none;
-  }
-  .hero-badge {
-    display:inline-flex; align-items:center; gap:0.5rem;
-    padding:0.5rem 1.2rem; border-radius:50px;
-    background:var(--glass); border:1px solid var(--glass-border);
-    font-size:0.8rem; font-weight:500; margin-bottom:2rem;
-    animation:float 3s ease-in-out infinite;
-  }
-  @keyframes float { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-8px)} }
-  .hero-badge .dot { width:8px;height:8px;border-radius:50%;background:#4ade80;animation:pulse 2s infinite; }
-  @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.4} }
-  .hero h1 {
-    font-size:clamp(2.5rem,6vw,4.5rem); font-weight:900; line-height:1.1;
-    margin-bottom:1.5rem; position:relative; z-index:1;
-    background:linear-gradient(135deg,#fff 0%,#c4b5fd 50%,var(--accent) 100%);
-    -webkit-background-clip:text; -webkit-text-fill-color:transparent;
-    background-size:200% 200%; animation:gradientShift 5s ease infinite;
-  }
-  @keyframes gradientShift { 0%{background-position:0% 50%} 50%{background-position:100% 50%} 100%{background-position:0% 50%} }
-  .hero p { font-size:1.15rem; max-width:600px; opacity:0.7; line-height:1.7; margin-bottom:2.5rem; position:relative;z-index:1; }
-  .hero-btns { display:flex; gap:1rem; flex-wrap:wrap; justify-content:center; position:relative;z-index:1; }
-  .btn {
-    padding:0.9rem 2rem; border-radius:50px; font-weight:600; font-size:0.95rem;
-    cursor:pointer; border:none; transition:all 0.3s;
-  }
-  .btn-primary {
-    background:linear-gradient(135deg,var(--primary),var(--accent));
-    color:#fff; box-shadow:0 4px 30px rgba(108,60,225,0.3);
-  }
-  .btn-primary:hover { transform:translateY(-3px); box-shadow:0 8px 40px rgba(108,60,225,0.5); }
-  .btn-outline {
-    background:transparent; color:#fff;
-    border:1.5px solid var(--glass-border);
-  }
-  .btn-outline:hover { background:var(--glass); border-color:rgba(255,255,255,0.25); transform:translateY(-3px); }
-
-  /* STATS */
-  .stats {
-    display:flex; justify-content:center; gap:3rem; padding:3rem 2rem;
-    flex-wrap:wrap; position:relative; z-index:1;
-  }
-  .stat {
-    text-align:center; padding:2rem; border-radius:20px;
-    background:var(--glass); border:1px solid var(--glass-border);
-    min-width:180px; transition:all 0.3s;
-  }
-  .stat:hover { transform:translateY(-5px); border-color:var(--primary); box-shadow:0 8px 30px rgba(108,60,225,0.15); }
-  .stat h3 {
-    font-size:2.5rem; font-weight:800;
-    background:linear-gradient(135deg,var(--accent),var(--primary));
-    -webkit-background-clip:text; -webkit-text-fill-color:transparent;
-  }
-  .stat p { font-size:0.85rem; opacity:0.6; margin-top:0.3rem; font-weight:500; }
-
-  /* SECTIONS */
-  section { padding:5rem 2rem; max-width:1100px; margin:0 auto; }
-  .section-title {
-    font-size:clamp(1.8rem,4vw,2.8rem); font-weight:800; text-align:center;
-    margin-bottom:1rem;
-  }
-  .section-sub { text-align:center; opacity:0.6; max-width:600px; margin:0 auto 3rem; line-height:1.7; }
-
-  /* CARDS */
-  .cards { display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:1.5rem; }
-  .card {
-    background:var(--glass); border:1px solid var(--glass-border);
-    border-radius:20px; padding:2rem; transition:all 0.4s; position:relative; overflow:hidden;
-  }
-  .card::before {
-    content:''; position:absolute; top:0; left:0; right:0; height:3px;
-    background:linear-gradient(90deg,var(--primary),var(--accent));
-    transform:scaleX(0); transition:transform 0.4s; transform-origin:left;
-  }
-  .card:hover { transform:translateY(-8px); border-color:var(--primary); }
-  .card:hover::before { transform:scaleX(1); }
-  .card-icon {
-    width:50px; height:50px; border-radius:14px; display:flex; align-items:center; justify-content:center;
-    font-size:1.5rem; margin-bottom:1.2rem;
-    background:linear-gradient(135deg,rgba(108,60,225,0.2),rgba(255,107,53,0.1));
-  }
-  .card h4 { font-size:1.15rem; font-weight:700; margin-bottom:0.6rem; }
-  .card p { font-size:0.88rem; opacity:0.6; line-height:1.6; }
-
-  /* TESTIMONIALS */
-  .testimonials { display:grid; grid-template-columns:repeat(auto-fit,minmax(300px,1fr)); gap:1.5rem; }
-  .testimonial {
-    background:var(--glass); border:1px solid var(--glass-border);
-    border-radius:20px; padding:2rem; position:relative;
-    transition:all 0.3s;
-  }
-  .testimonial:hover { border-color:var(--accent); transform:translateY(-4px); }
-  .testimonial .quote { font-size:0.9rem; line-height:1.7; opacity:0.8; font-style:italic; margin-bottom:1.2rem; }
-  .testimonial .author { display:flex; align-items:center; gap:0.8rem; }
-  .testimonial .avatar {
-    width:42px; height:42px; border-radius:50%;
-    background:linear-gradient(135deg,var(--primary),var(--accent));
-    display:flex; align-items:center; justify-content:center;
-    font-weight:700; font-size:0.9rem;
-  }
-  .testimonial .name { font-weight:700; font-size:0.9rem; }
-  .testimonial .role { font-size:0.75rem; opacity:0.5; }
-
-  /* CTA SECTION */
-  .cta-section {
-    text-align:center; padding:5rem 2rem;
-    background:linear-gradient(135deg,rgba(108,60,225,0.1),rgba(255,107,53,0.05));
-    border-radius:30px; margin:3rem auto; max-width:900px;
-    border:1px solid var(--glass-border);
-  }
-  .cta-section h2 { font-size:2.2rem; font-weight:800; margin-bottom:1rem; }
-  .cta-section p { opacity:0.6; margin-bottom:2rem; max-width:500px; margin-left:auto; margin-right:auto; line-height:1.7; }
-
-  /* ABOUT PAGE */
-  .about-hero {
-    min-height:60vh; display:flex; flex-direction:column; justify-content:center;
-    align-items:center; text-align:center; padding:10rem 2rem 4rem; position:relative;
-  }
-  .about-hero::before {
-    content:''; position:absolute; top:-20%; right:-10%;
-    width:600px; height:600px; border-radius:50%;
-    background:radial-gradient(circle, rgba(255,107,53,0.2) 0%, transparent 70%);
-    filter:blur(80px); pointer-events:none;
-  }
-  .about-hero h1 {
-    font-size:clamp(2.2rem,5vw,3.5rem); font-weight:900; margin-bottom:1.5rem;
-    background:linear-gradient(135deg,#fff,var(--accent));
-    -webkit-background-clip:text; -webkit-text-fill-color:transparent;
-  }
-  .about-hero p { max-width:650px; opacity:0.7; line-height:1.8; font-size:1.05rem; }
-
-  .about-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:2rem; margin-top:3rem; }
-  .about-card {
-    background:var(--glass); border:1px solid var(--glass-border);
-    border-radius:24px; padding:2.5rem; text-align:center; transition:all 0.4s;
-  }
-  .about-card:hover { transform:translateY(-6px); border-color:var(--primary); }
-  .about-card .icon { font-size:2.5rem; margin-bottom:1rem; }
-  .about-card h3 { font-size:1.2rem; font-weight:700; margin-bottom:0.8rem; }
-  .about-card p { font-size:0.88rem; opacity:0.6; line-height:1.7; }
-
-  .timeline { max-width:700px; margin:3rem auto; position:relative; padding-left:3rem; }
-  .timeline::before {
-    content:''; position:absolute; left:12px; top:0; bottom:0;
-    width:2px; background:linear-gradient(180deg,var(--primary),var(--accent));
-  }
-  .timeline-item { margin-bottom:2.5rem; position:relative; }
-  .timeline-item::before {
-    content:''; position:absolute; left:-27px; top:5px;
-    width:14px; height:14px; border-radius:50%;
-    background:var(--accent); border:3px solid var(--dark);
-    box-shadow:0 0 15px rgba(255,107,53,0.4);
-  }
-  .timeline-item h4 { font-weight:700; font-size:1.05rem; margin-bottom:0.4rem; }
-  .timeline-item p { font-size:0.88rem; opacity:0.6; line-height:1.6; }
-
-  /* CHECKOUT PAGE */
-  .checkout-hero {
-    min-height:40vh; display:flex; flex-direction:column; justify-content:center;
-    align-items:center; text-align:center; padding:10rem 2rem 3rem; position:relative;
-  }
-  .checkout-hero::before {
-    content:''; position:absolute; top:-20%; left:30%;
-    width:600px; height:600px; border-radius:50%;
-    background:radial-gradient(circle, rgba(108,60,225,0.25) 0%, transparent 70%);
-    filter:blur(80px); pointer-events:none;
-  }
-  .checkout-hero h1 {
-    font-size:clamp(2rem,4vw,3rem); font-weight:900; margin-bottom:1rem;
-    background:linear-gradient(135deg,#fff,var(--accent));
-    -webkit-background-clip:text; -webkit-text-fill-color:transparent;
-  }
-  .checkout-hero p { max-width:550px; opacity:0.7; line-height:1.7; font-size:1rem; }
-
-  .checkout-container {
-    display:grid; grid-template-columns:1fr 1fr; gap:2.5rem;
-    max-width:900px; margin:0 auto; padding:0 2rem 4rem;
-  }
-  @media(max-width:768px) { .checkout-container { grid-template-columns:1fr; } }
-
-  .checkout-product {
-    background:var(--glass); border:1px solid var(--glass-border);
-    border-radius:24px; padding:2.5rem; display:flex; flex-direction:column; gap:1.2rem;
-  }
-  .checkout-product .product-badge {
-    display:inline-flex; align-items:center; gap:0.4rem;
-    padding:0.35rem 0.9rem; border-radius:50px;
-    background:linear-gradient(135deg,rgba(108,60,225,0.25),rgba(255,107,53,0.15));
-    font-size:0.75rem; font-weight:600; width:fit-content; text-transform:uppercase; letter-spacing:0.5px;
-  }
-  .checkout-product h2 {
-    font-size:1.6rem; font-weight:800;
-  }
-  .checkout-product .product-desc {
-    font-size:0.9rem; opacity:0.65; line-height:1.7;
-  }
-  .checkout-product .product-price {
-    font-size:2.2rem; font-weight:900;
-    background:linear-gradient(135deg,var(--accent),var(--primary));
-    -webkit-background-clip:text; -webkit-text-fill-color:transparent;
-  }
-  .checkout-product .product-features {
-    list-style:none; padding:0; display:flex; flex-direction:column; gap:0.6rem;
-  }
-  .checkout-product .product-features li {
-    font-size:0.85rem; opacity:0.7; display:flex; align-items:center; gap:0.5rem;
-  }
-  .checkout-product .product-features li::before {
-    content:'✓'; color:var(--accent); font-weight:700;
+  .logo { font-family: var(--serif); font-size: 22px; font-weight: 500; letter-spacing: -0.02em; }
+  .logo em { font-style: italic; color: var(--accent); }
+  .nav-meta {
+    font-family: var(--mono); font-size: 11px; color: var(--ink-faded);
+    letter-spacing: 0.1em; text-transform: uppercase;
   }
 
-  .checkout-form {
-    background:var(--glass); border:1px solid var(--glass-border);
-    border-radius:24px; padding:2.5rem; display:flex; flex-direction:column; gap:1.2rem;
-  }
-  .checkout-form h3 { font-size:1.2rem; font-weight:700; margin-bottom:0.5rem; }
-  .checkout-form .form-group { display:flex; flex-direction:column; gap:0.4rem; }
-  .checkout-form label { font-size:0.8rem; font-weight:600; opacity:0.7; }
-  .checkout-form input {
-    padding:0.75rem 1rem; border-radius:12px; border:1px solid var(--glass-border);
-    background:rgba(255,255,255,0.05); color:#fff; font-size:0.9rem;
-    font-family:'Inter',sans-serif; outline:none; transition:border-color 0.3s;
-  }
-  .checkout-form input:focus { border-color:var(--primary); }
-  .checkout-form .btn-checkout {
-    margin-top:0.5rem; padding:1rem; border-radius:14px; border:none;
-    background:linear-gradient(135deg,var(--primary),var(--accent));
-    color:#fff; font-size:1rem; font-weight:700; cursor:pointer;
-    transition:all 0.3s; font-family:'Inter',sans-serif;
-  }
-  .checkout-form .btn-checkout:hover { transform:translateY(-2px); box-shadow:0 8px 30px rgba(108,60,225,0.4); }
-  .checkout-form .secure-note {
-    display:flex; align-items:center; gap:0.5rem;
-    font-size:0.75rem; opacity:0.45; justify-content:center;
+  /* hero */
+  main {
+    flex: 1; display: grid; grid-template-columns: 5fr 4fr;
+    gap: 80px; padding: 72px 0 56px; align-items: start;
   }
 
-  /* FOOTER */
+  .session-tag {
+    font-family: var(--mono); font-size: 11px; color: var(--highlight);
+    letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 28px;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .session-tag::before {
+    content: ''; width: 6px; height: 6px; border-radius: 50%;
+    background: var(--highlight); animation: pagePulse 2s infinite;
+  }
+  @keyframes pagePulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
+
+  h1 {
+    font-family: var(--serif); font-size: clamp(48px, 7vw, 84px);
+    font-weight: 400; line-height: 1; letter-spacing: -0.025em;
+    margin-bottom: 28px;
+  }
+  h1 em { font-style: italic; color: var(--accent); font-weight: 300; }
+
+  .lede {
+    font-size: 17px; color: var(--ink-soft); line-height: 1.6;
+    max-width: 480px; margin-bottom: 36px;
+  }
+
+  .start-cue {
+    padding: 20px 0; border-top: 1px solid var(--rule);
+    display: flex; justify-content: space-between; align-items: center;
+    font-family: var(--mono); font-size: 12px; color: var(--ink-faded);
+    letter-spacing: 0.05em;
+  }
+  .start-cue strong {
+    color: var(--ink); font-family: var(--sans);
+    font-size: 14px; font-weight: 500; letter-spacing: 0;
+  }
+  .start-cue .arrow { font-size: 18px; color: var(--accent); }
+
+  /* aside - instructions */
+  aside { background: var(--paper); border: 1px solid var(--rule); padding: 36px; }
+  aside h2 {
+    font-family: var(--serif); font-size: 22px; font-weight: 500;
+    margin-bottom: 20px;
+  }
+  aside ol { list-style: none; counter-reset: step; }
+  aside li {
+    counter-increment: step; padding: 16px 0;
+    border-bottom: 1px solid var(--rule);
+    display: flex; gap: 18px;
+  }
+  aside li:last-child { border-bottom: none; padding-bottom: 0; }
+  aside li::before {
+    content: counter(step, decimal-leading-zero);
+    font-family: var(--mono); font-size: 11px; color: var(--accent);
+    padding-top: 3px; min-width: 20px;
+  }
+  aside li p { font-size: 14.5px; color: var(--ink-soft); line-height: 1.55; }
+  aside li p strong { color: var(--ink); font-weight: 500; }
+
+  /* footer */
   footer {
-    padding:3rem 2rem; text-align:center;
-    border-top:1px solid var(--glass-border);
-    margin-top:3rem;
-  }
-  footer p { opacity:0.4; font-size:0.8rem; }
-  .footer-links { display:flex; justify-content:center; gap:2rem; margin-bottom:1rem; flex-wrap:wrap; }
-  .footer-links a { font-size:0.85rem; opacity:0.5; transition:all 0.3s; }
-  .footer-links a:hover { opacity:1; color:var(--accent); }
-
-  /* PARTICLES */
-  .particles { position:fixed; top:0; left:0; width:100%; height:100%; pointer-events:none; z-index:0; }
-  .particle {
-    position:absolute; border-radius:50%; background:rgba(108,60,225,0.15);
-    animation:drift linear infinite;
-  }
-  @keyframes drift {
-    0%{transform:translateY(100vh) rotate(0deg);opacity:0}
-    10%{opacity:1}
-    90%{opacity:1}
-    100%{transform:translateY(-10vh) rotate(720deg);opacity:0}
+    padding-top: 24px; border-top: 1px solid var(--rule);
+    display: flex; justify-content: space-between;
+    font-family: var(--mono); font-size: 11px; color: var(--ink-faded);
+    letter-spacing: 0.05em;
   }
 
-  @media(max-width:768px) {
-    .nav-links a:not(.nav-cta) { display:none; }
-    .stats { gap:1rem; }
-    .stat { min-width:140px; padding:1.2rem; }
+  @media (max-width: 820px) {
+    main { grid-template-columns: 1fr; gap: 48px; padding: 48px 0; }
+    .shell { padding: 28px 24px; }
   }
 </style>
+
 </head>
 <body>
 
-<div class="particles" id="particles"></div>
+<div class="shell">
 
-<nav>
-  <div class="logo">sidecar<span>.io</span></div>
-  <div class="nav-links">
-    <a class="active" onclick="showPage('home')">Home</a>
-    <a onclick="showPage('about')">About</a>
-    <a>Resources</a>
-    <a>Podcast</a>
-    <a onclick="showPage('checkout')">Checkout</a>
-    <a class="nav-cta" onclick="showPage('home')">Get Started</a>
-  </div>
-</nav>
+  <nav>
+    <div class="logo">Blue <em>Cypress</em></div>
+    <div class="nav-meta">venture fellow / ai screen</div>
+  </nav>
 
-<!-- HOME PAGE -->
-<div class="page active" id="home">
-  <div class="hero">
-    <div class="hero-badge"><span class="dot"></span> AI Education for Associations</div>
-    <h1>Your AI Learning Journey Starts Here</h1>
-    <p>Transform your association with cutting-edge AI education. Join thousands of professionals mastering AI training and earning their AAiP Certification.</p>
-    <div class="hero-btns">
-      <button class="btn btn-primary" onclick="showPage('about')">Explore Learning Hub</button>
-      <button class="btn btn-outline">Book a Demo</button>
-    </div>
-  </div>
-
-  <div class="stats">
-    <div class="stat"><h3>50K+</h3><p>Audience Reach</p></div>
-    <div class="stat"><h3>30K+</h3><p>Subscribers</p></div>
-    <div class="stat"><h3>1,000+</h3><p>Organizations Served</p></div>
-  </div>
-
-  <section>
-    <h2 class="section-title">How We Empower Associations</h2>
-    <p class="section-sub">From individual certification to team-wide training, we have the right path for your AI journey.</p>
-    <div class="cards">
-      <div class="card">
-        <div class="card-icon">🎓</div>
-        <h4>AAiP Certification</h4>
-        <p>Earn the industry-recognized AI certification designed specifically for association professionals and advance your career.</p>
-      </div>
-      <div class="card">
-        <div class="card-icon">🧠</div>
-        <h4>AI Mastermind</h4>
-        <p>Take your AI education to the next level with hands-on, agent-building curriculum and advanced AI knowledge.</p>
-      </div>
-      <div class="card">
-        <div class="card-icon">👥</div>
-        <h4>Team Learning Hub</h4>
-        <p>Transform your entire association team with comprehensive AI training built for organizations of all sizes.</p>
-      </div>
-      <div class="card">
-        <div class="card-icon">🎙️</div>
-        <h4>Sidecar Sync Podcast</h4>
-        <p>Weekly AI insights curated for busy association professionals. Stay ahead with actionable intelligence.</p>
+  <main>
+    <div>
+      <div class="session-tag">live session ready</div>
+      <h1>A conversation,<br>not a <em>questionnaire</em>.</h1>
+      <p class="lede">
+        Your AI interviewer will guide you through several open-ended questions
+        over the next 20–30 minutes. Speak naturally — pause to think, ask for
+        clarification, take your time. Recordings are reviewed by our team
+        within 48 hours.
+      </p>
+      <div class="start-cue">
+        <span><strong>Begin when ready.</strong> Press the orb to start.</span>
+        <span class="arrow">↘</span>
       </div>
     </div>
-  </section>
 
-  <section>
-    <h2 class="section-title">Trusted by Leading Associations</h2>
-    <p class="section-sub">Hear from professionals who've transformed their organizations with Sidecar.</p>
-    <div class="testimonials">
-      <div class="testimonial">
-        <p class="quote">"If you're in the association space and want to stay ahead of the curve, this is the place to be. The insights have given me practical strategies I can apply right away."</p>
-        <div class="author">
-          <div class="avatar">DD</div>
-          <div><div class="name">Danielle Duran Baron</div><div class="role">VP, Marketing & Communications, SNA</div></div>
-        </div>
-      </div>
-      <div class="testimonial">
-        <p class="quote">"Twenty-two staff members have already earned their AAiP certification. It's an essential investment in the future of our organization."</p>
-        <div class="author">
-          <div class="avatar">BM</div>
-          <div><div class="name">Bruce Moe</div><div class="role">Executive Director, MSTA</div></div>
-        </div>
-      </div>
-      <div class="testimonial">
-        <p class="quote">"Partnering with Sidecar to offer educational resources has positioned us as an AI innovation leader in our industry."</p>
-        <div class="author">
-          <div class="avatar">AG</div>
-          <div><div class="name">Ann Gergen</div><div class="role">Executive Director, AGRiP</div></div>
-        </div>
-      </div>
-    </div>
-  </section>
+    <aside>
+      <h2>Before you begin</h2>
+      <ol>
+        <li><p><strong>Allow microphone access.</strong> Your browser will prompt you when you press start.</p></li>
+        <li><p><strong>Find a quiet spot.</strong> Background noise affects transcription quality.</p></li>
+        <li><p><strong>Long questions appear on-screen.</strong> When the interviewer asks a complex question, the full text will display so you can re-read it.</p></li>
+        <li><p><strong>End the call when finished.</strong> Your responses upload automatically.</p></li>
+      </ol>
+    </aside>
+  </main>
 
-  <section>
-    <div class="cta-section">
-      <h2>Ready to Transform Your Association?</h2>
-      <p>Partner with us to bring AI education to your members or get custom training for your internal team.</p>
-      <button class="btn btn-primary">Let's Talk</button>
-    </div>
-  </section>
+  <footer>
+    <span>© Blue Cypress 2026</span>
+    <span>support@bluecypress.io</span>
+  </footer>
+
 </div>
 
-<!-- ABOUT PAGE -->
-<div class="page" id="about">
-  <div class="about-hero">
-    <h1>About Sidecar</h1>
-    <p>We're on a mission to empower every association professional with the AI skills they need to thrive. Since our founding, we've been the bridge between cutting-edge technology and the association community.</p>
-  </div>
 
-  <section>
-    <div class="about-grid">
-      <div class="about-card">
-        <div class="icon">🚀</div>
-        <h3>Our Mission</h3>
-        <p>To democratize AI education for association professionals worldwide, giving every organization the tools to innovate, grow, and lead in the age of artificial intelligence.</p>
-      </div>
-      <div class="about-card">
-        <div class="icon">💡</div>
-        <h3>Our Vision</h3>
-        <p>A future where every association harnesses the full power of AI — enhancing member experiences, driving efficiency, and unlocking new possibilities for their communities.</p>
-      </div>
-      <div class="about-card">
-        <div class="icon">❤️</div>
-        <h3>Our Values</h3>
-        <p>Innovation, accessibility, and community. We believe AI should be approachable, practical, and impactful for professionals at every level of expertise.</p>
-      </div>
-    </div>
-  </section>
+<!-- ════════════════════════════════════════════════════════════════════════════ -->
+<!-- ════════════════════════════════════════════════════════════════════════════ -->
+<!--                                                                              -->
+<!--   ╔══════════════════════════════════════════════════════════════════╗       -->
+<!--   ║                                                                  ║       -->
+<!--   ║         ▼  HUBSPOT INTEGRATION BLOCK · START  ▼                  ║       -->
+<!--   ║         ─────────────────────────────────────                    ║       -->
+<!--   ║                                                                  ║       -->
+<!--   ║   Copy EVERYTHING between this START marker and the END marker   ║       -->
+<!--   ║   below into a Custom HTML module on your HubSpot page.          ║       -->
+<!--   ║                                                                  ║       -->
+<!--   ║   This block is fully self-contained:                            ║       -->
+<!--   ║     · Loads its own fonts                                        ║       -->
+<!--   ║     · CSS is scoped with the `bc-` prefix (no collisions)        ║       -->
+<!--   ║     · Includes the ElevenLabs widget + script                    ║       -->
+<!--   ║     · Wires up the client tools                                  ║       -->
+<!--   ║                                                                  ║       -->
+<!--   ║   Contents (in order):                                           ║       -->
+<!--   ║     1.  Fonts for the overlay                                    ║       -->
+<!--   ║     2.  Overlay HTML markup                                      ║       -->
+<!--   ║     3.  Overlay CSS                                              ║       -->
+<!--   ║     4.  ElevenLabs widget element + embed script                 ║       -->
+<!--   ║     5.  Client-tool registration                                 ║       -->
+<!--   ║                                                                  ║       -->
+<!--   ╚══════════════════════════════════════════════════════════════════╝       -->
+<!--                                                                              -->
+<!-- ════════════════════════════════════════════════════════════════════════════ -->
+<!-- ════════════════════════════════════════════════════════════════════════════ -->
 
-  <section>
-    <h2 class="section-title">Our Journey</h2>
-    <p class="section-sub">From a bold idea to the leading AI education platform for associations.</p>
-    <div class="timeline">
-      <div class="timeline-item">
-        <h4>🌱 The Beginning</h4>
-        <p>Sidecar was founded with a simple belief: association professionals deserve world-class AI education tailored to their unique challenges and opportunities.</p>
-      </div>
-      <div class="timeline-item">
-        <h4>📚 Learning Hub Launch</h4>
-        <p>We launched the AI Learning Hub — a comprehensive platform offering courses, certifications, and resources designed specifically for the association community.</p>
-      </div>
-      <div class="timeline-item">
-        <h4>🏆 AAiP Certification</h4>
-        <p>The Association AI Professional (AAiP) Certification became the industry standard, with thousands of professionals earning their credentials.</p>
-      </div>
-      <div class="timeline-item">
-        <h4>🌍 1,000+ Organizations</h4>
-        <p>Today, we serve over 1,000 organizations and reach an audience of 50,000+ professionals, empowering associations across every industry.</p>
-      </div>
-    </div>
-  </section>
 
-  <section>
-    <h2 class="section-title">What Sets Us Apart</h2>
-    <p class="section-sub">We're not just another AI course — we're your long-term partner in AI transformation.</p>
-    <div class="cards">
-      <div class="card">
-        <div class="card-icon">🎯</div>
-        <h4>Association-Focused</h4>
-        <p>Every piece of content is built for the unique needs of associations — no generic tech courses here.</p>
-      </div>
-      <div class="card">
-        <div class="card-icon">🤝</div>
-        <h4>Community-Driven</h4>
-        <p>Learn alongside 30,000+ subscribers and a vibrant community of forward-thinking association leaders.</p>
-      </div>
-      <div class="card">
-        <div class="card-icon">⚡</div>
-        <h4>Practical & Actionable</h4>
-        <p>Hands-on training with real-world use cases you can implement immediately in your organization.</p>
-      </div>
-    </div>
-  </section>
+<!-- ────────────────────────────────────────────────────────────────────── -->
+<!-- 1 / 5  ·  FONTS FOR THE OVERLAY                                         -->
+<!-- (Safe to remove if your HubSpot page already loads Fraunces & Plex Mono) -->
+<!-- ────────────────────────────────────────────────────────────────────── -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..500;1,9..144,400..500&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 
-  <section>
-    <div class="cta-section">
-      <h2>Join the AI Revolution</h2>
-      <p>Whether you're just starting out or ready to go deep, we have the right path for your AI journey.</p>
-      <button class="btn btn-primary" onclick="showPage('home')">Get Started Today</button>
-    </div>
-  </section>
-</div>
 
-<!-- CHECKOUT PAGE -->
-<div class="page" id="checkout">
-  <div class="checkout-hero">
-    <h1 id="checkout-title">Complete Your Purchase</h1>
-    <p id="checkout-subtitle">You're one step away from transforming your association's AI journey.</p>
-  </div>
-
-  <div class="checkout-container">
-    <div class="checkout-product">
-      <div class="product-badge">Most Popular</div>
-      <h2 id="checkout-product-name">AAiP Certification</h2>
-      <p class="product-desc" id="checkout-product-desc">Earn the industry-recognized Association AI Professional certification. Includes full course access, exam, and digital credential.</p>
-      <div class="product-price" id="checkout-product-price">$497</div>
-      <ul class="product-features" id="checkout-product-features">
-        <li>Full self-paced curriculum</li>
-        <li>Official AAiP exam &amp; credential</li>
-        <li>1 year of community access</li>
-        <li>Certificate of completion</li>
-      </ul>
-    </div>
-
-    <div class="checkout-form">
-      <h3>Payment Details</h3>
-      <div class="form-group">
-        <label>Full Name</label>
-        <input type="text" placeholder="Jane Smith" />
-      </div>
-      <div class="form-group">
-        <label>Email Address</label>
-        <input type="email" placeholder="jane@association.org" />
-      </div>
-      <div class="form-group">
-        <label>Card Number</label>
-        <input type="text" placeholder="4242 4242 4242 4242" />
-      </div>
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;">
-        <div class="form-group">
-          <label>Expiry</label>
-          <input type="text" placeholder="MM / YY" />
-        </div>
-        <div class="form-group">
-          <label>CVC</label>
-          <input type="text" placeholder="123" />
-        </div>
-      </div>
-      <button class="btn-checkout" onclick="handleCheckoutSubmit()">Pay Now</button>
-      <div class="secure-note">🔒 Secured with 256-bit SSL encryption</div>
+<!-- ────────────────────────────────────────────────────────────────────── -->
+<!-- 2 / 5  ·  OVERLAY MARKUP                                                -->
+<!-- The agent shows/hides this via the show_long_question / hide_long_      -->
+<!-- question client tools. Edit #bc-question-text to set your question.     -->
+<!-- ────────────────────────────────────────────────────────────────────── -->
+<div id="bc-question-overlay" role="dialog" aria-live="polite" aria-modal="true">
+  <div id="bc-question-card">
+    <div class="bc-q-eyebrow"><span class="bc-live-dot"></span>now reading aloud</div>
+    <div class="bc-q-title">Question</div>
+    <p id="bc-question-text">
+      <!-- ◆ Replace this with your long-form question text ◆ -->
+      Imagine a professional association that represents CPAs — about 5,000 members, mostly working at small to mid-sized accounting firms or in solo practice. Members pay around $500 a year for things like networking events, an annual conference, continuing education credits, and access to the certification program. <strong>The CEO of the association is worried that AI is changing how their members work day-to-day, and the association's current model of episodic touchpoints — a conference here, a webinar there, a credential renewal every few years — feels increasingly disconnected from what members actually need to navigate.</strong>
+<br><br>
+He's asking: how should the association rethink how it delivers value to members? What does the next version of this association look like?
+    </p>
+    <div class="bc-q-footer">
+      <span>take your time</span>
+      <span>esc to dismiss</span>
     </div>
   </div>
 </div>
 
-<footer>
-  <div class="footer-links">
-    <a onclick="showPage('home')">Home</a>
-    <a onclick="showPage('about')">About</a>
-    <a>Learning Hub</a>
-    <a>Podcast</a>
-    <a>Events</a>
-    <a>Contact</a>
-    <a>Privacy Policy</a>
-  </div>
-  <p>© 2026 Sidecar. All rights reserved.</p>
-</footer>
 
-  <!-- Test Page - Voice Agent Widget -->
-<script src="http://localhost:3002/voice-widget.js"></script>
-<voice-agent
-  deployment-id="4A49F6B5-2904-4776-AE7D-0C4CE5E55C98"
-  api-url="http://localhost:3002">
-</voice-agent>
+<!-- ────────────────────────────────────────────────────────────────────── -->
+<!-- 3 / 5  ·  OVERLAY STYLES (scoped with bc- prefix)                       -->
+<!-- ────────────────────────────────────────────────────────────────────── -->
+<style>
+  #bc-question-overlay {
+    display: none;
+    position: fixed; inset: 0;
+    background: rgba(10, 10, 10, 0.55);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    z-index: 9999;
+    align-items: center; justify-content: center;
+    padding: 32px;
+    animation: bc-fade-in 0.3s ease;
+  }
+  #bc-question-overlay.bc-visible { display: flex; }
+  @keyframes bc-fade-in { from { opacity: 0; } to { opacity: 1; } }
 
+  #bc-question-card {
+    background: #ffffff;
+    max-width: 720px; width: 100%;
+    padding: 52px 56px 44px;
+    border-radius: 2px;
+    box-shadow: 0 40px 80px rgba(0, 0, 0, 0.25);
+    position: relative;
+    animation: bc-card-in 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+  }
+  @keyframes bc-card-in {
+    from { transform: translateY(20px); opacity: 0; }
+    to   { transform: translateY(0); opacity: 1; }
+  }
+  #bc-question-card::before {
+    content: ''; position: absolute; left: 0; top: 0; bottom: 0;
+    width: 4px; background: #c14d2e;
+  }
+
+  .bc-q-eyebrow {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 11px; letter-spacing: 0.15em; text-transform: uppercase;
+    color: #c14d2e; margin-bottom: 18px;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .bc-live-dot {
+    width: 6px; height: 6px; background: #c14d2e;
+    border-radius: 50%; animation: bc-pulse 1.5s infinite;
+  }
+  @keyframes bc-pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
+
+  .bc-q-title {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 11px; color: #95938b;
+    text-transform: uppercase; letter-spacing: 0.12em;
+    margin-bottom: 18px;
+  }
+  #bc-question-text {
+    font-family: 'Fraunces', Georgia, serif;
+    font-size: 26px; line-height: 1.4;
+    color: #0a0a0a; letter-spacing: -0.01em;
+    margin: 0;
+  }
+  .bc-q-footer {
+    margin-top: 32px; padding-top: 20px;
+    border-top: 1px solid #e8e6e0;
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 11px; color: #95938b;
+    display: flex; justify-content: space-between;
+  }
+  @media (max-width: 640px) {
+    #bc-question-card { padding: 36px 28px 28px; }
+    #bc-question-text { font-size: 20px; }
+  }
+</style>
+
+
+<!-- ────────────────────────────────────────────────────────────────────── -->
+<!-- 4 / 5  ·  ELEVENLABS WIDGET (your existing embed code)                  -->
+<!-- ────────────────────────────────────────────────────────────────────── -->
+<elevenlabs-convai agent-id="agent_0901kgqxky2wejqt17328p2hj96c"></elevenlabs-convai>
+<script src="https://unpkg.com/@elevenlabs/convai-widget-embed" async type="text/javascript"></script>
+
+
+<!-- ────────────────────────────────────────────────────────────────────── -->
+<!-- 5 / 5  ·  CLIENT-TOOL REGISTRATION                                      -->
+<!--                                                                         -->
+<!-- The widget fires `elevenlabs-convai:call` once, just before connecting  -->
+<!-- to the agent. We attach our tool implementations to                     -->
+<!-- event.detail.config.clientTools at that point.                          -->
+<!--                                                                         -->
+<!-- The tool names below MUST match the Client Tools you configured in the  -->
+<!-- ElevenLabs dashboard exactly (case-sensitive):                          -->
+<!--   · show_long_question                                                  -->
+<!--   · hide_long_question                                                  -->
+<!--                                                                         -->
+<!-- Your agent's system prompt should tell it WHEN to call them, e.g.:      -->
+<!--   "Call show_long_question immediately before reading question N        -->
+<!--    aloud, and call hide_long_question once the candidate begins         -->
+<!--    answering or before transitioning to the next question."             -->
+<!-- ────────────────────────────────────────────────────────────────────── -->
 <script>
-  // Page navigation
-  function showPage(id) {
-    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-    document.getElementById(id).classList.add('active');
-    document.querySelectorAll('.nav-links a:not(.nav-cta)').forEach(a => a.classList.remove('active'));
-    document.querySelectorAll('.nav-links a:not(.nav-cta)').forEach(a => {
-      if (a.getAttribute('onclick') === `showPage('${id}')`) a.classList.add('active');
+  (function () {
+    function showQuestion() {
+      var overlay = document.getElementById('bc-question-overlay');
+      if (overlay) overlay.classList.add('bc-visible');
+      return 'Question is now visible on screen for the candidate.';
+    }
+
+    function hideQuestion() {
+      var overlay = document.getElementById('bc-question-overlay');
+      if (overlay) overlay.classList.remove('bc-visible');
+      return 'Question has been cleared from the screen.';
+    }
+
+    // ESC dismisses the overlay — handy during testing, harmless in prod.
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape') hideQuestion();
     });
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  }
 
-  // Floating particles
-  const pc = document.getElementById('particles');
-  for (let i = 0; i < 20; i++) {
-    const p = document.createElement('div');
-    p.className = 'particle';
-    const s = Math.random() * 4 + 2;
-    p.style.cssText = `
-      width:${s}px; height:${s}px;
-      left:${Math.random()*100}%;
-      animation-duration:${Math.random()*20+15}s;
-      animation-delay:${Math.random()*10}s;
-      background:${Math.random()>0.5 ? 'rgba(108,60,225,0.2)' : 'rgba(255,107,53,0.12)'};
-    `;
-    pc.appendChild(p);
-  }
+    function wire() {
+      var widget = document.querySelector('elevenlabs-convai');
+      if (!widget) return;
 
-  // Intersection observer for scroll animations
-  const obs = new IntersectionObserver((entries) => {
-    entries.forEach(e => { if(e.isIntersecting) { e.target.style.opacity='1'; e.target.style.transform='translateY(0)'; }});
-  }, { threshold:0.1 });
-  document.querySelectorAll('.card,.stat,.testimonial,.about-card,.timeline-item').forEach(el => {
-    el.style.opacity = '0'; el.style.transform = 'translateY(30px)';
-    el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
-    obs.observe(el);
-  });
+      widget.addEventListener('elevenlabs-convai:call', function (event) {
+        event.detail.config.clientTools = {
+          show_long_question: showQuestion,
+          hide_long_question: hideQuestion
 
-  // ========================================
-  // Voice Client Tool Handlers
-  // ========================================
+          // ──── PARAMETERIZED VARIANT (optional) ────────────────────────
+          // If you'd rather pass the question text from the agent prompt
+          // dynamically instead of hard-coding it in the markup above,
+          // add a `text` parameter to the dashboard tool and replace
+          // the show_long_question line above with:
+          //
+          //   show_long_question: function (params) {
+          //     document.getElementById('bc-question-text').textContent = params.text;
+          //     return showQuestion();
+          //   },
+          //   hide_long_question: hideQuestion
+          // ───────────────────────────────────────────────────────────────
+        };
+      });
+    }
 
-  // Debug: log all voice-tool events to discover DriverClass values
-  (function() {
-    var origDispatch = document.dispatchEvent.bind(document);
-    document.dispatchEvent = function(event) {
-      if (event.type && event.type.startsWith('voice-tool:')) {
-        console.log('[Voice Tool Event]', event.type, event.detail);
-      }
-      return origDispatch(event);
-    };
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', wire);
+    } else {
+      wire();
+    }
   })();
-
-  // Navigate tool — internal pages + external URLs
-  document.addEventListener('voice-tool:navigate', function(e) {
-    var params = e.detail.params;
-    var responseEvent = e.detail.responseEvent;
-    var url = params.url || params.URL;
-    var page = params.page || null;
-    var title = params.title || params.name || params.linkTitle || null;
-
-    if (page && document.getElementById(page)) {
-      showPage(page);
-    }
-    // External URLs are handled by the widget's iframe panel via showLink response
-
-    var displayTitle = title || (page ? page.charAt(0).toUpperCase() + page.slice(1) : 'Open Link');
-    document.dispatchEvent(new CustomEvent(responseEvent, {
-      detail: {
-        success: true,
-        data: { navigatedTo: page || url },
-        showLink: true,
-        linkUrl: url || '#' + (page || ''),
-        linkTitle: displayTitle
-      }
-    }));
-  });
-
-  // Purchase tool — populates checkout page and navigates to it
-  document.addEventListener('voice-tool:startPurchase', function(e) {
-    var params = e.detail.params;
-    var responseEvent = e.detail.responseEvent;
-    var productName = params.product || params.productName || 'Product';
-    var productDesc = params.description || params.productDescription || '';
-    var checkoutUrl = params.checkout || params.checkoutUrl || '#';
-    var price = params.price || '';
-
-    // Populate checkout page with product info
-    populateCheckout({ name: productName, description: productDesc, price: price, checkoutUrl: checkoutUrl });
-
-    // Navigate to the checkout page
-    showPage('checkout');
-
-    document.dispatchEvent(new CustomEvent(responseEvent, {
-      detail: {
-        success: true,
-        data: { navigatedTo: 'checkout', product: productName },
-        showPurchase: true,
-        productName: productName,
-        productDescription: productDesc,
-        checkoutUrl: checkoutUrl
-      }
-    }));
-  });
-
-  // Populate the checkout page with product details
-  function populateCheckout(product) {
-    if (product.name) {
-      document.getElementById('checkout-product-name').textContent = product.name;
-      document.getElementById('checkout-title').textContent = 'Get ' + product.name;
-    }
-    if (product.description) {
-      document.getElementById('checkout-product-desc').textContent = product.description;
-    }
-    if (product.price) {
-      document.getElementById('checkout-product-price').textContent = product.price;
-    }
-  }
-
-  // Handle checkout form submission (demo)
-  function handleCheckoutSubmit() {
-    alert('Thank you for your purchase! (This is a demo checkout page)');
-  }
-
-  console.log('[test-widget] Client tool handlers registered: navigate, startPurchase');
-
 </script>
+
+
+<!-- ════════════════════════════════════════════════════════════════════════════ -->
+<!--                                                                              -->
+<!--   ╔══════════════════════════════════════════════════════════════════╗       -->
+<!--   ║                                                                  ║       -->
+<!--   ║         ▲  HUBSPOT INTEGRATION BLOCK · END  ▲                    ║       -->
+<!--   ║                                                                  ║       -->
+<!--   ╚══════════════════════════════════════════════════════════════════╝       -->
+<!--                                                                              -->
+<!-- ════════════════════════════════════════════════════════════════════════════ -->
+
 </body>
 </html>
